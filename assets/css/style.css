@@ -1,0 +1,470 @@
+/* ── VARIABILI ── */
+:root {
+  --midnight: #0d0f1e;
+  --deepspace: #1b1f3b;
+  --moonlight: #c8c8e8;
+  --starlight: #7b68ee;
+  --border: rgba(200, 200, 232, 0.15);
+  --text-primary: #c8c8e8;
+  --text-secondary: rgba(200, 200, 232, 0.75);
+  --text-muted: rgba(200, 200, 232, 0.5);
+  --accent: #7b68ee;
+  --accent-dim: rgba(123, 104, 238, 0.2);
+  --live: #4ade80;
+  --max-width: 1100px;
+}
+
+/* ── RESET ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: var(--midnight);
+  color: var(--text-primary);
+  font-family: "DM Sans", sans-serif;
+  min-height: 100vh;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* ── NAVBAR ── */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.5rem;
+  height: 60px;
+  background: rgba(13, 15, 30, 0.96);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+}
+
+.logo {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  color: var(--text-primary);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.logo span {
+  color: var(--starlight);
+  font-style: italic;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.25rem;
+}
+.nav-links a {
+  font-family: "Space Mono", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 0.4rem 0.85rem;
+  border-radius: 4px;
+  transition:
+    color 0.2s,
+    background 0.2s;
+}
+.nav-links a:hover {
+  color: var(--text-primary);
+  background: rgba(200, 200, 232, 0.06);
+}
+.nav-links a.active {
+  color: var(--text-primary);
+  background: var(--accent-dim);
+}
+
+.nav-live {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: "Space Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 1px;
+  color: var(--live);
+  white-space: nowrap;
+}
+.live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--live);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 1.5rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+}
+.footer-left {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+.footer-right {
+  font-family: "Space Mono", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
+
+/* ── HERO ── */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 3rem;
+  padding: 4rem 2.5rem 3rem;
+  border-bottom: 1px solid var(--border);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+.hero-tag {
+  font-family: "Space Mono", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.2rem;
+}
+.hero-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 4rem;
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+.hero-title em {
+  color: var(--starlight);
+  font-style: italic;
+  font-weight: 400;
+}
+.hero-sub {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+/* ── MOON WIDGET ── */
+.moon-widget {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--deepspace);
+  border: 1px solid rgba(200, 200, 232, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.moon-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 150px;
+  border-radius: 150px 0 0 150px;
+  background: rgba(123, 104, 238, 0.3);
+  /* La larghezza viene impostata inline in PHP in base all'illuminazione */
+}
+.moon-label {
+  position: relative;
+  z-index: 1;
+  font-family: "Space Mono", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 1px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+.moon-pct {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: var(--text-primary);
+  display: block;
+}
+
+/* ── CARD GRID HOME ── */
+.cards-wrap {
+  border-bottom: 1px solid var(--border);
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+.card {
+  background: var(--midnight);
+  padding: 1.8rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+.card:hover {
+  background: #111326;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-tag {
+  font-family: "Space Mono", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(123, 104, 238, 0.35);
+  padding: 2px 7px;
+  border-radius: 3px;
+}
+.card-arrow {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+.card-label {
+  font-family: "Space Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.card-value {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: var(--text-primary);
+  line-height: 1;
+}
+.card-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0.1rem 0;
+}
+.card-sub {
+  font-family: "Space Mono", monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.5px;
+  color: var(--text-secondary);
+}
+
+/* ── SEZIONI DUE COLONNE HOME ── */
+.sections {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  border-bottom: 1px solid var(--border);
+}
+.section {
+  background: var(--midnight);
+  padding: 2rem 1.8rem;
+}
+.section-title {
+  font-family: "Space Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 1.4rem;
+}
+.section-title span {
+  color: var(--accent);
+}
+
+/* Righe pianeti */
+.planets {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.planet-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  transition: border-color 0.2s;
+}
+.planet-row:hover {
+  border-color: rgba(123, 104, 238, 0.4);
+}
+.planet-name {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--text-primary);
+}
+.planet-const {
+  font-family: "Space Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+.planet-alt {
+  text-align: right;
+  font-family: "Space Mono", monospace;
+}
+.planet-alt strong {
+  font-size: 0.9rem;
+  color: var(--accent);
+  font-weight: 400;
+}
+.planet-alt span {
+  display: block;
+  font-size: 0.58rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Griglia sole */
+.sole-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+.sole-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.sole-label {
+  font-family: "Space Mono", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.sole-value {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.7rem;
+  font-weight: 300;
+  color: var(--text-primary);
+}
+.sole-sub {
+  font-family: "Space Mono", monospace;
+  font-size: 0.6rem;
+  color: var(--text-secondary);
+}
+
+/* ── PAGINE INTERNE — header pagina ── */
+.page-header {
+  padding: 3rem 2.5rem 2.5rem;
+  border-bottom: 1px solid var(--border);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+.page-tag {
+  font-family: "Space Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+.page-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 3rem;
+  font-weight: 300;
+  color: var(--text-primary);
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+.page-title em {
+  color: var(--starlight);
+  font-style: italic;
+}
+.page-sub {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+
+/* ── CONTENT WRAPPER PAGINE INTERNE ── */
+.page-content {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2rem 2.5rem;
+}
+
+/* ── DATA GRID — griglia dati generica ── */
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+.data-item {
+  background: var(--midnight);
+  padding: 1.4rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.data-label {
+  font-family: "Space Mono", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.data-value {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.9rem;
+  font-weight: 300;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+.data-sub {
+  font-family: "Space Mono", monospace;
+  font-size: 0.6rem;
+  color: var(--text-secondary);
+}
