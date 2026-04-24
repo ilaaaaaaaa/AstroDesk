@@ -15,44 +15,40 @@
 
     <!-- HEADER PAGINA -->
     <div class="page-header">
-        <div class="page-tag">// Luna</div>
-        <h1 class="page-title">La <em>Luna</em></h1>
-        <p class="page-sub">Fase lunare, illuminazione e dati orbitali aggiornati.</p>
+        <div class="page-tag">// Calendario</div>
+        <h1 class="page-title">Calendario <em>Astronomico</em></h1>
+        <p class="page-sub">Equinozi, solstizi ed eventi astronomici del mese.</p>
     </div>
 
     <div class="page-content">
 
-        <!-- DATI PRINCIPALI -->
+        <!-- EVENTI DEL MESE -->
+        <div class="section-title">// <span>Eventi</span> del mese</div>
         <div class="data-grid">
-            <div class="data-item">
-                <div class="data-label">Fase</div>
-                <div class="data-value">—</div>
-            </div>
-            <div class="data-item">
-                <div class="data-label">Illuminazione</div>
-                <div class="data-value">—</div>
-            </div>
-            <div class="data-item">
-                <div class="data-label">Alba lunare</div>
-                <div class="data-value">—</div>
-            </div>
-            <div class="data-item">
-                <div class="data-label">Tramonto lunare</div>
-                <div class="data-value">—</div>
-            </div>
-            <div class="data-item">
-                <div class="data-label">Prossima luna piena</div>
-                <div class="data-value">—</div>
-            </div>
+            <!-- Verrà generato da un loop PHP con astronomy-bundle-php -->
         </div>
 
-        <!-- STORICO 7 GIORNI -->
-        <div class="section-title">// <span>Storico</span> · ultimi 7 giorni</div>
-        <div class="storico-grid">
-            <!-- Verrà generato da un loop PHP su dati MongoDB -->
+        <!-- EQUINOZI E SOLSTIZI -->
+        <div class="section-title">// <span>Equinozi</span> e Solstizi</div>
+        <div class="data-grid">
+            <div class="data-item">
+                <div class="data-label">Equinozio di primavera</div>
+                <div class="data-value">—</div>
+            </div>
+            <div class="data-item">
+                <div class="data-label">Solstizio d'estate</div>
+                <div class="data-value">—</div>
+            </div>
+            <div class="data-item">
+                <div class="data-label">Equinozio d'autunno</div>
+                <div class="data-value">—</div>
+            </div>
+            <div class="data-item">
+                <div class="data-label">Solstizio d'inverno</div>
+                <div class="data-value">—</div>
+            </div>
         </div>
 
     </div>
-
     <?php require 'includes/footer.php'; ?>
 </body>

@@ -1,0 +1,45 @@
+/* ── FOTO DEL GIORNO ── */
+
+.apod-image {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.apod-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.apod-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.apod-date {
+  font-family: "Space Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.apod-title {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.apod-text {
+  font-size: 0.95rem;
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  max-width: 720px;
+}

@@ -1,0 +1,22 @@
+/* ── FOOTER ── */
+footer {
+  padding: 1.5rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+}
+.footer-left {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+.footer-right {
+  font-family: "Space Mono", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+}
