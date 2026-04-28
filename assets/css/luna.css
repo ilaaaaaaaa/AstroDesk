@@ -1,13 +1,12 @@
 /* ── LUNA PAGE ── */
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400&family=Space+Mono:ital@0;1&display=swap");
-/* Storico 7 giorni */
+
 .storico-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 1px;
   background: var(--border);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
   margin-top: 1rem;
   margin-bottom: 2rem;
@@ -21,6 +20,11 @@
   align-items: center;
   gap: 0.5rem;
   text-align: center;
+  transition: background 0.2s;
+}
+
+.storico-item:hover {
+  background: var(--surface);
 }
 
 .storico-giorno {
@@ -36,7 +40,7 @@
   height: 36px;
   border-radius: 50%;
   background: var(--deepspace);
-  border: 1px solid rgba(200, 200, 232, 0.2);
+  border: 1px solid rgba(200, 185, 145, 0.2);
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
@@ -48,13 +52,13 @@
   top: 0;
   height: 36px;
   border-radius: 36px 0 0 36px;
-  background: rgba(123, 104, 238, 0.4);
+  background: rgba(200, 185, 145, 0.3);
 }
 
 .storico-pct {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Cinzel", serif;
   font-size: 1rem;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--text-primary);
 }
 
@@ -66,11 +70,10 @@
   line-height: 1.4;
 }
 
-/* Evidenzia il giorno corrente */
 .storico-item.oggi {
   background: var(--accent-dim);
 }
 
 .storico-item.oggi .storico-giorno {
-  color: var(--accent);
+  color: var(--gold);
 }

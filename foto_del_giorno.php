@@ -8,6 +8,8 @@
 
     <link rel="stylesheet" href="assets/css/foto_del_giorno.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="assets/css/header.css">
 </head>
 
 <body>

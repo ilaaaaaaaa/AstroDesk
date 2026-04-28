@@ -1,0 +1,15 @@
+{
+    "name": "ilame/astro-desk",
+    "autoload": {
+        "psr-4": {
+            "Ilame\\AstroDesk\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ilaaaaaaaa",
+            "email": "162697755+ilaaaaaaaa@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}

@@ -2,10 +2,11 @@
 
 .apod-image {
   width: 100%;
-  border-radius: 8px;
+  border-radius: 4px;
   overflow: hidden;
   border: 1px solid var(--border);
   margin-bottom: 2rem;
+  box-shadow: 0 0 40px rgba(200, 185, 145, 0.06);
 }
 
 .apod-image img {
@@ -25,21 +26,23 @@
   font-size: 0.6rem;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--gold);
 }
 
 .apod-title {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Cinzel", serif;
   font-size: 2rem;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--text-primary);
   line-height: 1.2;
 }
 
 .apod-text {
-  font-size: 0.95rem;
+  font-family: "Crimson Pro", Georgia, serif;
+  font-size: 1.1rem;
   font-weight: 300;
+  font-style: italic;
   color: var(--text-secondary);
-  line-height: 1.8;
+  line-height: 1.9;
   max-width: 720px;
 }

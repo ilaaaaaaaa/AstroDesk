@@ -5,14 +5,17 @@ footer {
   align-items: center;
   justify-content: space-between;
   max-width: var(--max-width);
-  margin: 0 auto;
+  margin: 2rem auto 0;
   border-top: 1px solid var(--border);
-  margin-top: 2rem;
+  position: relative;
+  z-index: 1;
 }
 .footer-left {
-  font-family: "Cormorant Garamond", serif;
-  font-size: 0.9rem;
-  color: var(--text-muted);
+  font-family: "Cinzel", serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--gold-dim);
 }
 .footer-right {
   font-family: "Space Mono", monospace;

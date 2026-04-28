@@ -1,5 +1,6 @@
 <!-- HEADER + NAV -->
-<link rel="stylesheet" href="/astrodesk/assets/css/header.css">
+<div class="starfield" id="starfield"></div>
+<div class="<?= isset($nebulaSole) ? 'nebula-sole' : 'nebula' ?>"></div>
 <header class="header">
     <div class="logo">
         <a href="home.php" class="logo-text">Astro<span>Desk</span></a>

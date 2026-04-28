@@ -1,22 +1,28 @@
 <?php
+session_start();
+$nebulaSole = true;
+
 // COORDINATE 
-$lat  = 45.4386;
-$lng  = 10.9916;
+// default Milano
+$lat = $_SESSION['lat'] ?? 45.4642;
+$lng = $_SESSION['lng'] ?? 10.9916;
 
 // CHIAMATA API sunrise-sunset.org 
-$url      = "https://api.sunrise-sunset.org/json?lat=$lat&lng=$lng&date=today&formatted=0";
+$url = "https://api.sunrise-sunset.org/json?lat=$lat&lng=$lng&date=today&formatted=0";
 $risposta = file_get_contents($url);
-$dati     = json_decode($risposta, true);
+$dati = json_decode($risposta, true);
 
 // CONVERSIONE DA UTC A ORA ITALIANA 
-function convertiOra($orario_utc) {
+function convertiOra($orario_utc)
+{
     $data = new DateTime($orario_utc, new DateTimeZone('UTC'));
     $data->setTimezone(new DateTimeZone('Europe/Rome'));
     return $data->format('H:i');
 }
 
 // CALCOLO DURATA DEL GIORNO
-function calcolaDurata($alba_utc, $tramonto_utc) {
+function calcolaDurata($alba_utc, $tramonto_utc)
+{
     $alba = new DateTime($alba_utc, new DateTimeZone('UTC'));
     $tramonto = new DateTime($tramonto_utc, new DateTimeZone('UTC'));
     $diff = $tramonto->getTimestamp() - $alba->getTimestamp();
@@ -50,9 +56,11 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
     <title>AstroDesk</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/sole.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="assets/css/header.css">
 </head>
 
-<body>
+<body id="page-sole">
     <?php require 'includes/header.php'; ?>
 
     <!-- HEADER PAGINA -->
@@ -122,16 +130,16 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
 
         // Formatta un oggetto Date come "HH:MM"
         function formatOra(data) {
-            var ore    = String(data.getHours()).padStart(2, '0');
+            var ore = String(data.getHours()).padStart(2, '0');
             var minuti = String(data.getMinutes()).padStart(2, '0');
             return ore + ':' + minuti;
         }
 
         // Calcolo della durata in ore e minuti tra due oggetti Date
         function formatDurata(alba, tramonto) {
-            var diff   = tramonto - alba;          // differenza in millisecondi
+            var diff = tramonto - alba;          // differenza in millisecondi
             var minTot = Math.round(diff / 60000); // minuti totali (arrotondati)
-            var ore    = Math.floor(minTot / 60);  // ore intere (NON arrotondate)
+            var ore = Math.floor(minTot / 60);  // ore intere (NON arrotondate)
             var minuti = minTot % 60;              // minuti rimanenti
             return ore + 'h ' + String(minuti).padStart(2, '0') + 'm';
         }
@@ -152,11 +160,11 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
 
             // SunCalc calcola alba e tramonto per quella data e coordinate
             var orari = SunCalc.getTimes(giorno, lat, lng);
-            var alba  = orari.sunrise;
-            var tram  = orari.sunset;
+            var alba = orari.sunrise;
+            var tram = orari.sunset;
 
             // Formatta l'etichetta del giorno (es. "Lun 21/4")
-            var nomeDow   = nomiGiorni[giorno.getDay()];
+            var nomeDow = nomiGiorni[giorno.getDay()];
             var etichetta = nomeDow + ' ' + giorno.getDate() + '/' + (giorno.getMonth() + 1);
 
             // Creazione del blocco HTML per questo giorno
@@ -166,10 +174,11 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
             blocco.innerHTML =
                 '<div class="data-label">' + etichetta + '</div>' +
                 '<div class="data-value">' + formatOra(alba) + ' — ' + formatOra(tram) + '</div>' +
-                '<div class="data-sub">'   + formatDurata(alba, tram) + '</div>';
+                '<div class="data-sub">' + formatDurata(alba, tram) + '</div>';
 
             contenitore.appendChild(blocco);
         }
     </script>
 </body>
+
 </html>

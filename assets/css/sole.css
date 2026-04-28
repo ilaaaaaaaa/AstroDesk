@@ -1,10 +1,89 @@
+/* ── TEMA DIURNO B — blu profondo ── */
+body#page-sole {
+  background: linear-gradient(180deg, #0a1628 0%, #0d3b6e 40%, #1565a0 100%);
+  background-attachment: fixed;
+}
+
+body#page-sole .nebula-sole {
+  display: none;
+}
+
+/* ── HEADER ── */
+body#page-sole .header {
+  background: rgba(10, 22, 40, 0.94);
+  border-bottom: 1px solid rgba(200, 185, 145, 0.15);
+}
+body#page-sole .logo-text {
+  color: #c8b991;
+}
+body#page-sole .logo-text span {
+  color: #f4f0e8;
+  font-weight: 400;
+}
+body#page-sole .nav a {
+  color: rgba(244, 240, 232, 0.5);
+}
+body#page-sole .nav a:hover {
+  color: #f4f0e8;
+  background: rgba(200, 185, 145, 0.06);
+}
+body#page-sole .nav a.active {
+  color: #c8b991;
+  background: rgba(200, 185, 145, 0.1);
+}
+body#page-sole .nav-live {
+  color: #4ade80;
+}
+body#page-sole .live-dot {
+  background: #4ade80;
+  box-shadow: 0 0 8px #4ade80;
+}
+
+/* ── CARD E DATA ITEM ── */
+body#page-sole .card,
+body#page-sole .data-item {
+  background: rgba(10, 22, 40, 0.7);
+}
+body#page-sole .card:hover,
+body#page-sole .data-item:hover {
+  background: rgba(10, 22, 40, 0.85);
+}
+body#page-sole .cards,
+body#page-sole .data-grid {
+  background: rgba(200, 185, 145, 0.1);
+}
+
+/* ── PARTICELLE ── */
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(200, 185, 145, 0.5);
+  border-radius: 50%;
+  animation: rise var(--d, 6s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  opacity: var(--op, 0.3);
+}
+@keyframes rise {
+  0%,
+  100% {
+    transform: translateY(0px);
+    opacity: var(--op, 0.3);
+  }
+  50% {
+    transform: translateY(-20px);
+    opacity: calc(var(--op, 0.3) * 2);
+  }
+}
+
+/* ── STORICO ── */
 .storico-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(200, 185, 145, 0.1);
+  border: 1px solid rgba(200, 185, 145, 0.12);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 2rem;
 }
