@@ -11,4 +11,12 @@ foreach ($lines as $line) {
 
 $client = new MongoDB\Client($_ENV['MONGODB_URI']);
 $db = $client->astrodesk;
+
+try {
+    $collection = $db->test;
+    $collection->findOne();
+    echo "Connessione OK!";
+} catch (Exception $e) {
+    echo "Errore: " . $e->getMessage();
+}
 ?>
