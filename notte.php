@@ -94,6 +94,15 @@ $lng = $_SESSION['lng'] ?? 10.9916;
             });
         }
 
+        // Valuta la visibilità in base all'altitudine
+        function getVisibilita(alt) {
+            if (alt < 0) return "sotto l'orizzonte";
+            if (alt < 10) return "vicino all'orizzonte";
+            if (alt < 30) return "bassa visibilità";
+            if (alt < 60) return "buona visibilità";
+            return "ottima visibilità";
+        }
+
         // Calcola ore di buio (tramonto sole → alba sole)
         const sunSet = Astronomy.SearchRiseSet(Astronomy.Body.Sun, observer, -1, now, 1);
         const sunRise = Astronomy.SearchRiseSet(Astronomy.Body.Sun, observer, +1, now, 1);
@@ -125,7 +134,7 @@ $lng = $_SESSION['lng'] ?? 10.9916;
         <div class="storico-giorno">${p.nome}</div>
         <div class="planet-dot" style="background: ${visibile ? 'rgba(74, 222, 128, 0.3)' : 'rgba(239, 68, 68, 0.3)'}; border: 1px solid ${visibile ? '#4ade80' : '#ef4444'};"></div>
         <div class="storico-pct">${alt.toFixed(1)}°</div>
-        <div class="storico-fase">${visibile ? 'visibile' : 'sotto orizzonte'}</div>
+        <div class="storico-fase">${getVisibilita(alt)}</div>
     `;
 
             container.appendChild(item);
