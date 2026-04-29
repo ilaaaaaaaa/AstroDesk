@@ -2,8 +2,7 @@
 session_start();
 $nebulaSole = true;
 
-// COORDINATE 
-// default Milano
+// COORDINATE (per default Milano)
 $lat = $_SESSION['lat'] ?? 45.4642;
 $lng = $_SESSION['lng'] ?? 10.9916;
 
@@ -54,6 +53,7 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AstroDesk</title>
+
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/sole.css">
     <link rel="stylesheet" href="assets/css/footer.css">
