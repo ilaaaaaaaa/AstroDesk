@@ -1,5 +1,4 @@
-/* ── LUNA PAGE ── */
-
+/* ── STORICO GRID (condiviso con notte.php) ── */
 .storico-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);

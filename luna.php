@@ -27,6 +27,7 @@ foreach ($storico as $doc) {
     ];
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="it">
 
