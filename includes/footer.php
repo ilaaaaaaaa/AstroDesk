@@ -13,10 +13,19 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         lat: pos.coords.latitude,
-                        lon: pos.coords.longitude
+                        lng: pos.coords.longitude
                     })
                 });
+
                 sessionStorage.setItem('locationAsked', 'true');
+            },
+            err => {
+                console.log(err);
+
+                // ❗ NON bloccare per sempre se fallisce
+                if (err.code !== err.PERMISSION_DENIED) {
+                    sessionStorage.removeItem('locationAsked');
+                }
             }
         );
     }

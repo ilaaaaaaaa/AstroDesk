@@ -7,7 +7,7 @@
     </div>
 
     <nav class="nav">
-        <a href="home.php">Home</a>
+        <a href="home.php">LA TUA STANZA</a>
         <a href="luna.php">Luna</a>
         <a href="sole.php">Sole</a>
         <a href="notte.php">Notte</a>

@@ -1,4 +1,14 @@
-﻿<!DOCTYPE html>
+﻿<?php
+session_start();
+
+// COORDINATE (di default Milano se non impostate dall'utente)
+$lat = $_SESSION['lat'] ?? 45.4642;
+$lng = $_SESSION['lng'] ?? 10.9916;
+
+$lat_display = number_format((float) $lat, 2);
+$lng_display = number_format((float) $lng, 2);
+?>
+<!DOCTYPE html>
 <html lang="it">
 
 <head>
@@ -15,14 +25,19 @@
 
     <?php require 'includes/header.php'; ?>
 
+    <!--<pre><?php print_r($_SESSION); ?></pre>-->
     <!-- HERO -->
     <div class="hero">
         <div>
-            <div class="hero-tag">Milano · 45.46° N · 9.19° E</div>
-            <h1 class="hero-title">Il cielo<br>di <em>stanotte</em></h1>
+            <div class="hero-tag">
+                <?= $lat_display ?>° N · <?= $lng_display ?>° E
+            </div>
+            <h1 class="hero-title">
+                La tua stanza<br><em>sotto le stelle</em>
+            </h1>
             <p class="hero-sub">
-                Dati ambientali in tempo reale<br>
-                rilevati dall'ESP8266.
+                Dati astronomici e condizioni ambientali<br>
+                rilevati in tempo reale.
             </p>
         </div>
         <div class="moon-widget">
@@ -60,12 +75,12 @@
 
             <div class="card">
                 <div class="card-header">
-                    <div class="card-tag">—</div>
+                    <div class="card-tag">Umidità</div>
                 </div>
-                <div class="card-label">—</div>
+                <div class="card-label">Umidità relativa</div>
                 <div class="card-value">—</div>
                 <div class="card-divider"></div>
-                <div class="card-sub">—</div>
+                <div class="card-sub">% · SHT30</div>
             </div>
 
             <div class="card">
@@ -80,6 +95,10 @@
 
         </div>
     </div>
+    <script>
+        const lat = Number(<?= json_encode($lat) ?>);
+        const lng = Number(<?= json_encode($lng) ?>);
+    </script>
 
     <?php require 'includes/footer.php'; ?>
 </body>

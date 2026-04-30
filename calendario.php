@@ -97,7 +97,6 @@ $lng = $_SESSION['lng'] ?? 10.9916;
         });
 
         // ── ECLISSI ──
-        // ── ECLISSI ──
         const gridEclissi = document.getElementById('eclissi');
         const eclissi = [];
 
