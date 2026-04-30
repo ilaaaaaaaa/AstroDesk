@@ -58,6 +58,9 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
     <link rel="stylesheet" href="assets/css/sole.css">
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="assets/css/header.css">
+    
+    <script src="assets/js/glossario.js" defer></script>
+    <script src="assets/js/tooltip.js" defer></script>
 </head>
 
 <body id="page-sole">

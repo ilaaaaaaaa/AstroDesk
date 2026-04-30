@@ -515,6 +515,30 @@ body {
   text-transform: uppercase;
   color: var(--gold-dim);
   margin-bottom: 6px;
+  border-bottom: 1px dotted #888;
+  position: relative;
+}
+.data-label:hover {
+  color: var(--gold);
+}
+.tooltip-box {
+  position: fixed;
+  transform: translate(-50%, -100%);
+  background: #1a1a2e;
+  color: #e0e0e0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+  width: 220px;
+  text-align: center;
+  border: 1px solid #444;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 9999;
 }
 .data-value {
   font-family: "Cinzel", serif;

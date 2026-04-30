@@ -40,6 +40,9 @@ foreach ($storico as $doc) {
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="assets/css/luna.css">
 
+    <script src="assets/js/glossario.js" defer></script>
+    <script src="assets/js/tooltip.js" defer></script>
+
     <!-- Libreria Astronomy Engine -->
     <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
 </head>
