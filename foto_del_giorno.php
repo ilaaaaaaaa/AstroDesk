@@ -53,15 +53,25 @@ if ($dati_db) {
 
         <?php else: ?>
 
-        <?php if ($apod['media_type'] === 'video'): ?>
-        <!-- VIDEO (solitamente YouTube) -->
-        <div class="apod-video">
-            <iframe
-                src="<?= htmlspecialchars($apod['url']) ?>"
-                title="<?= htmlspecialchars($apod['title']) ?>"
-                allowfullscreen>
-            </iframe>
-        </div>
+        <?php if ($apod['media_type'] == 'video'): ?>
+            <?php if (str_ends_with($apod['url'], '.mp4')): ?>
+            <!-- VIDEO mp4 diretto — si usa il tag <video> -->
+            <div class="apod-video">
+                <video controls width="100%">
+                    <source src="<?= htmlspecialchars($apod['url']) ?>" type="video/mp4">
+                </video>
+            </div>
+ 
+            <?php else: ?>
+            <!-- VIDEO YouTube o altro — si usa iframe -->
+            <div class="apod-video">
+                <iframe
+                    src="<?= htmlspecialchars($apod['url']) ?>"
+                    title="<?= htmlspecialchars($apod['title']) ?>"
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <?php endif; ?>
 
         <?php else: ?>
         <!-- IMMAGINE -->
