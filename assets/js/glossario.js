@@ -8,11 +8,15 @@ const glossario = {
     "crepuscolo astronomico": "Periodo in cui il Sole è tra −12° e −18° sotto l'orizzonte. Dopo questo punto il cielo è completamente buio per le osservazioni astronomiche.",
     "fase": "La porzione illuminata della Luna visibile dalla Terra, che cambia nel corso del ciclo di circa 29,5 giorni. Le fasi principali sono: Luna nuova, Crescente, Primo quarto, Gibbosa crescente, Luna piena, Gibbosa calante, Ultimo quarto, Calante.",
     "illuminazione": "La percentuale della superficie lunare visibile che risulta illuminata dal Sole in un dato momento. 0% = Luna nuova, 100% = Luna piena.",
-    "luna piena": "La fase in cui la Terra si trova tra il Sole e la Luna: l'intera faccia visibile è illuminata. Il cielo notturno è molto luminoso.",
+    "prossima luna piena": "La fase in cui la Terra si trova tra il Sole e la Luna: l'intera faccia visibile è illuminata. Il cielo notturno è molto luminoso.",
     "alba lunare": "Il momento in cui la Luna sorge sull'orizzonte, che cambia ogni giorno in modo significativo (circa 50 minuti di ritardo al giorno).",
     "tramonto lunare": "Il momento in cui la Luna tramonta sull'orizzonte, che cambia ogni giorno in modo significativo (circa 50 minuti di ritardo al giorno).",
-    "equinozio": "I due momenti dell'anno (marzo e settembre) in cui il Sole si trova esattamente sull'equatore celeste: giorno e notte hanno la stessa durata (circa 12 ore ciascuno) in tutto il mondo.",
-    "solstizio": "I due momenti dell'anno (giugno e dicembre) in cui il Sole raggiunge la sua massima declinazione nord o sud. Corrispondono al giorno più lungo e al giorno più corto dell'anno.",
-    "eclissi solare": "Si verifica quando la Luna si interpone tra Terra e Sole, proiettando la sua ombra sulla Terra. Può essere totale, parziale o anulare.",
-    "eclissi lunare": "Si verifica quando la Terra si interpone tra Sole e Luna, proiettando la sua ombra sulla Luna. La Luna diventa rossastra (luna di sangue) durante un'eclissi totale."
+    "equinozio di primavera": "Giorno (a marzo) in cui giorno e notte durano quasi uguale. Segna l'inizio della primavera.",
+    "equinozio d'autunno": "Giorno (a settembre) in cui giorno e notte durano quasi uguale. Segna l'inizio dell'autunno.",
+    "solstizio d'estate": "Giorno (a giugno) con più ore di luce dell'anno. Segna l'inizio dell'estate.",
+    "solstizio d'inverno": "Giorno (a dicembre) con meno ore di luce dell'anno. Segna l'inizio dell'inverno.",
+    "eclissi solare totale": "Quando la Luna copre completamente il Sole e si fa buio per qualche minuto.",
+    "eclissi solare anulare": "Quando la Luna copre il centro del Sole ma resta visibile un anello luminoso intorno.",
+    "eclissi lunare parziale": "Quando solo una parte della Luna entra nell'ombra della Terra e si oscura.",
+    "eclissi lunare penombrale": "Quando la Luna passa nella penombra della Terra e si scurisce leggermente."
 };

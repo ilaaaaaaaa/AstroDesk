@@ -181,6 +181,9 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
 
             contenitore.appendChild(blocco);
         }
+
+        // Alla fine dello script, dopo il forEach dei pianeti
+        document.querySelectorAll('.data-label').forEach(applicaTooltip);
     </script>
 </body>
 

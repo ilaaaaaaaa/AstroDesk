@@ -167,6 +167,9 @@ foreach ($storico as $doc) {
             `;
             grid.appendChild(item);
         });
+
+        // Alla fine dello script, dopo il forEach dei pianeti
+        document.querySelectorAll('.data-label').forEach(applicaTooltip);
     </script>
 
     <?php require 'includes/footer.php'; ?>

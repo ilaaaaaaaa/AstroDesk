@@ -14,7 +14,6 @@ $lng = $_SESSION['lng'] ?? 10.9916;
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/header.css">
     <link rel="stylesheet" href="assets/css/footer.css">
-    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
 </head>
 
 <body>
@@ -37,6 +36,11 @@ $lng = $_SESSION['lng'] ?? 10.9916;
         <div class="data-grid" id="eclissi"></div>
 
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+
+    <script src="assets/js/glossario.js"></script>
+    <script src="assets/js/tooltip.js"></script>
 
     <script>
         const now = Astronomy.MakeTime(new Date());
@@ -70,6 +74,7 @@ $lng = $_SESSION['lng'] ?? 10.9916;
                 <div class="data-value">${valore}</div>
                 ${sub ? `<div class="data-sub">${sub}</div>` : ''}
             `;
+            applicaTooltip(item.querySelector('.data-label'));
             return item;
         }
 
@@ -97,6 +102,17 @@ $lng = $_SESSION['lng'] ?? 10.9916;
         });
 
         // ── ECLISSI ──
+        const tipiEclissi = {
+            'total':     'totale',
+            'partial':   'parziale',
+            'annular':   'anulare',
+            'penumbral': 'penombrale'
+        };
+
+        function traduciTipo(kind) {
+            return tipiEclissi[kind] || kind;
+        }
+
         const gridEclissi = document.getElementById('eclissi');
         const eclissi = [];
 
@@ -106,7 +122,7 @@ $lng = $_SESSION['lng'] ?? 10.9916;
             const eclisse = Astronomy.SearchGlobalSolarEclipse(cercaSolare);
             if (!eclisse) break;
             eclissi.push({
-                label: 'Eclissi solare · ' + eclisse.kind,
+                label: 'Eclissi solare · ' + traduciTipo(eclisse.kind),
                 data: eclisse.peak.date,
                 astroTime: eclisse.peak
             });
@@ -119,7 +135,7 @@ $lng = $_SESSION['lng'] ?? 10.9916;
             const eclisse = Astronomy.SearchLunarEclipse(cercaLunare);
             if (!eclisse) break;
             eclissi.push({
-                label: 'Eclissi lunare · ' + eclisse.kind,
+                label: 'Eclissi lunare · ' + traduciTipo(eclisse.kind),
                 data: eclisse.peak.date,
                 astroTime: eclisse.peak
             });
