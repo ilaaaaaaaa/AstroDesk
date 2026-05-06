@@ -122,7 +122,7 @@ $lng = $_SESSION['lng'] ?? 10.9916;
             const eclisse = Astronomy.SearchGlobalSolarEclipse(cercaSolare);
             if (!eclisse) break;
             eclissi.push({
-                label: 'Eclissi solare · ' + traduciTipo(eclisse.kind),
+                label: 'Eclissi solare ' + traduciTipo(eclisse.kind),
                 data: eclisse.peak.date,
                 astroTime: eclisse.peak
             });
@@ -135,7 +135,7 @@ $lng = $_SESSION['lng'] ?? 10.9916;
             const eclisse = Astronomy.SearchLunarEclipse(cercaLunare);
             if (!eclisse) break;
             eclissi.push({
-                label: 'Eclissi lunare · ' + traduciTipo(eclisse.kind),
+                label: 'Eclissi lunare ' + traduciTipo(eclisse.kind),
                 data: eclisse.peak.date,
                 astroTime: eclisse.peak
             });
