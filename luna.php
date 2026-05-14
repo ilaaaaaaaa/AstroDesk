@@ -20,7 +20,7 @@ $storico = $collection->find(
 $storico_json = [];
 foreach ($storico as $doc) {
     $storico_json[] = [
-        // Per convertire la data UTC di MongoDB nel fuso orario italiano
+        // Per convertire la data UTC di MongoDB nell'ora italiana
         'data' => $doc['data']->toDateTime()->setTimezone(new DateTimeZone('Europe/Rome'))->format('d/m'),
         'illuminazione' => $doc['illuminazione'],
         'fase' => $doc['fase'],

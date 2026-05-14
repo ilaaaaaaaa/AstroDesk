@@ -6,12 +6,12 @@ $nebulaSole = true;
 $lat = $_SESSION['lat'] ?? 45.4642;
 $lng = $_SESSION['lng'] ?? 10.9916;
 
-// CHIAMATA API sunrise-sunset.org 
+// Chiamata API sunrise-sunset.org 
 $url = "https://api.sunrise-sunset.org/json?lat=$lat&lng=$lng&date=today&formatted=0";
-$risposta = file_get_contents($url);
+$risposta = @file_get_contents($url);
 $dati = json_decode($risposta, true);
 
-// CONVERSIONE DA UTC A ORA ITALIANA 
+// Per convertire l'ora UTC nell'ora italiana
 function convertiOra($orario_utc)
 {
     $data = new DateTime($orario_utc, new DateTimeZone('UTC'));
@@ -19,18 +19,18 @@ function convertiOra($orario_utc)
     return $data->format('H:i');
 }
 
-// CALCOLO DURATA DEL GIORNO
+// Calcolo durata del giorno
 function calcolaDurata($alba_utc, $tramonto_utc)
 {
     $alba = new DateTime($alba_utc, new DateTimeZone('UTC'));
     $tramonto = new DateTime($tramonto_utc, new DateTimeZone('UTC'));
-    $diff = $tramonto->getTimestamp() - $alba->getTimestamp();
+    $diff = $tramonto->getTimestamp() - $alba->getTimestamp();      // Differenza in secondi
     $ore = intdiv($diff, 3600);
     $minuti = intdiv($diff % 3600, 60);
     return $ore . 'h ' . str_pad($minuti, 2, '0', STR_PAD_LEFT) . 'm';
 }
 
-// LETTURA DEI VALORI DAL JSON 
+// Lettura dei valori da json
 $r = $dati['results'];
 
 $alba = convertiOra($r['sunrise']);
@@ -58,9 +58,6 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
     <link rel="stylesheet" href="assets/css/sole.css">
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="assets/css/header.css">
-    
-    <script src="assets/js/glossario.js" defer></script>
-    <script src="assets/js/tooltip.js" defer></script>
 </head>
 
 <body id="page-sole">
@@ -74,7 +71,6 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
     </div>
 
     <div class="page-content">
-
         <!-- DATI PRINCIPALI -->
         <div class="data-grid">
             <div class="data-item">
@@ -126,6 +122,9 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
     <!-- SunCalc: calcola alba e tramonto per date passate, senza API -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js"></script>
 
+    <script src="assets/js/glossario.js"></script>
+    <script src="assets/js/tooltip.js"></script>
+
     <script>
         // Coordinate passate da PHP a JavaScript
         var lat = <?= $lat ?>;
@@ -147,7 +146,6 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
             return ore + 'h ' + String(minuti).padStart(2, '0') + 'm';
         }
 
-        // Nomi dei giorni della settimana in italiano
         var nomiGiorni = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
 
         var oggi = new Date();
@@ -156,7 +154,6 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
         var contenitore = document.getElementById('storico');
 
         for (var i = 8; i >= 1; i--) {
-
             // Calcolo della data del giorno (oggi - i giorni)
             var giorno = new Date(oggi);
             giorno.setDate(oggi.getDate() - i);
@@ -166,8 +163,8 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
             var alba = orari.sunrise;
             var tram = orari.sunset;
 
-            // Formatta l'etichetta del giorno (es. "Lun 21/4")
-            var nomeDow = nomiGiorni[giorno.getDay()];
+            // Per formattare l'etichetta del giorno (es. "Lun 21/4")
+            var nomeDow = nomiGiorni[giorno.getDay()];      // Restituisce il giorno della settimana come numero (domenica = 0, lunedì = 1, ...)
             var etichetta = nomeDow + ' ' + giorno.getDate() + '/' + (giorno.getMonth() + 1);
 
             // Creazione del blocco HTML per questo giorno
@@ -182,9 +179,8 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
             contenitore.appendChild(blocco);
         }
 
-        // Alla fine dello script, dopo il forEach dei pianeti
+        // Per tutti gli elementi HTML con classe .data-label, applica la funzione 
         document.querySelectorAll('.data-label').forEach(applicaTooltip);
     </script>
 </body>
-
 </html>
