@@ -5,6 +5,7 @@ $nasa_api_key = $_ENV['NASA_API_KEY'];
 
 $collezione = $db->foto;
 
+echo date('Y-m-d H:i:s');
 $oggi = date('Y-m-d');
 
 // CONTROLLO SE I DATI DI OGGI ESISTONO GIÀ IN MONGODB 
@@ -14,9 +15,9 @@ if ($dati_db) {
     $apod = $dati_db;
 } else {
     // Chiamata API NASA
-    $url      = "https://api.nasa.gov/planetary/apod?api_key=$nasa_api_key&date=$oggi";
+    $url = "https://api.nasa.gov/planetary/apod?api_key=$nasa_api_key&date=$oggi";
     $risposta = file_get_contents($url);
-    $apod     = json_decode($risposta, true);
+    $apod = json_decode($risposta, true);
 
     $collezione->insertOne($apod);
 }
@@ -48,47 +49,44 @@ if ($dati_db) {
     <div class="page-content">
 
         <?php if (!$apod): ?>
-        <!-- ERRORE: API non raggiungibile e nessun dato in db -->
-        <p class="apod-errore">Impossibile recuperare la foto del giorno. Riprova più tardi.</p>
+            <!-- ERRORE: API non raggiungibile e nessun dato in db -->
+            <p class="apod-errore">Impossibile recuperare la foto del giorno. Riprova più tardi.</p>
 
         <?php else: ?>
 
-        <?php if ($apod['media_type'] == 'video'): ?>
-            <?php if (str_ends_with($apod['url'], '.mp4')): ?>
-            <!-- VIDEO mp4 diretto — si usa il tag <video> -->
-            <div class="apod-video">
-                <video controls width="100%">
-                    <source src="<?= htmlspecialchars($apod['url']) ?>" type="video/mp4">
-                </video>
-            </div>
- 
+            <?php if ($apod['media_type'] == 'video'): ?>
+                <?php if (str_ends_with($apod['url'], '.mp4')): ?>
+                    <!-- VIDEO mp4 diretto — si usa il tag <video> -->
+                    <div class="apod-video">
+                        <video controls width="100%">
+                            <source src="<?= htmlspecialchars($apod['url']) ?>" type="video/mp4">
+                        </video>
+                    </div>
+
+                <?php else: ?>
+                    <!-- VIDEO YouTube o altro — si usa iframe -->
+                    <div class="apod-video">
+                        <iframe src="<?= htmlspecialchars($apod['url']) ?>" title="<?= htmlspecialchars($apod['title']) ?>"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                <?php endif; ?>
+
             <?php else: ?>
-            <!-- VIDEO YouTube o altro — si usa iframe -->
-            <div class="apod-video">
-                <iframe
-                    src="<?= htmlspecialchars($apod['url']) ?>"
-                    title="<?= htmlspecialchars($apod['title']) ?>"
-                    allowfullscreen>
-                </iframe>
-            </div>
+                <!-- IMMAGINE -->
+                <div class="apod-image">
+                    <img src="<?= htmlspecialchars($apod['hdurl'] ?? $apod['url']) ?>"
+                        alt="<?= htmlspecialchars($apod['title']) ?>">
+                </div>
+
             <?php endif; ?>
 
-        <?php else: ?>
-        <!-- IMMAGINE -->
-        <div class="apod-image">
-            <img
-                src="<?= htmlspecialchars($apod['hdurl'] ?? $apod['url']) ?>"
-                alt="<?= htmlspecialchars($apod['title']) ?>">
-        </div>
-
-        <?php endif; ?>
-
-        <!-- TITOLO E SPIEGAZIONE -->
-        <div class="apod-body">
-            <div class="apod-date"><?= date('d/m/Y', strtotime($apod['date'])) ?></div>
-            <h2 class="apod-title"><?= htmlspecialchars($apod['title']) ?></h2>
-            <p class="apod-text"><?= htmlspecialchars($apod['explanation']) ?></p>
-        </div>
+            <!-- TITOLO E SPIEGAZIONE -->
+            <div class="apod-body">
+                <div class="apod-date"><?= date('d/m/Y', strtotime($apod['date'])) ?></div>
+                <h2 class="apod-title"><?= htmlspecialchars($apod['title']) ?></h2>
+                <p class="apod-text"><?= htmlspecialchars($apod['explanation']) ?></p>
+            </div>
 
         <?php endif; ?>
 
@@ -97,4 +95,5 @@ if ($dati_db) {
     <?php require 'includes/footer.php'; ?>
 
 </body>
+
 </html>

@@ -11,5 +11,8 @@
             "email": "162697755+ilaaaaaaaa@users.noreply.github.com"
         }
     ],
-    "require": {}
+    "require": {
+        "php-mqtt/client": "^2.3",
+        "mongodb/mongodb": "^2.2"
+    }
 }
