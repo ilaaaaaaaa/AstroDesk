@@ -1,4 +1,6 @@
 ﻿<?php
+require_once __DIR__ . '/includes/db.php';
+
 session_start();
 
 // COORDINATE (di default Milano se non impostate dall'utente)
@@ -8,6 +10,17 @@ $lng = $_SESSION['lng'] ?? 10.9916;
 // Formatta le coordinate in numeri con 2 cifre decimali
 $lat_display = number_format((float) $lat, 2);
 $lng_display = number_format((float) $lng, 2);
+
+// Ricavo i dati più recenti dei sensori da MongoDB
+$collection = $db->sensori;
+$latest = $collection->findOne(
+    [],
+    [
+        'sort' => ['timestamp' => -1]
+    ]
+);
+$temperatura = $latest['temperatura'] ?? null;
+$umidita = $latest['umidita'] ?? null;
 ?>
 
 <!DOCTYPE html>
@@ -53,20 +66,12 @@ $lng_display = number_format((float) $lng, 2);
         <div class="cards">
             <div class="card">
                 <div class="card-header">
-                    <div class="card-tag">Pressione</div>
-                </div>
-                <div class="card-label">Pressione atmosferica</div>
-                <div class="card-value">—</div>
-                <div class="card-divider"></div>
-                <div class="card-sub">hPa · BMP280</div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
                     <div class="card-tag">Temperatura</div>
                 </div>
                 <div class="card-label">Temperatura</div>
-                <div class="card-value">—</div>
+                <div class="card-value">
+                    <?= $temperatura !== null ? $temperatura . "°C" : "—" ?>
+                </div>
                 <div class="card-divider"></div>
                 <div class="card-sub">°C · BMP280</div>
             </div>
@@ -76,22 +81,24 @@ $lng_display = number_format((float) $lng, 2);
                     <div class="card-tag">Umidità</div>
                 </div>
                 <div class="card-label">Umidità relativa</div>
-                <div class="card-value">—</div>
+                <div class="card-value">
+                    <?= $umidita !== null ? $umidita . "%" : "—" ?>
+                </div>
                 <div class="card-divider"></div>
                 <div class="card-sub">% · SHT30</div>
             </div>
 
             <div class="card">
                 <div class="card-header">
-                    <div class="card-tag">—</div>
+                    <div class="card-tag">Illuminazione dell'ambiente</div>
                 </div>
-                <div class="card-label">—</div>
+                <div class="card-label">Illuminazione</div>
                 <div class="card-value">—</div>
                 <div class="card-divider"></div>
-                <div class="card-sub">—</div>
+                <div class="card-sub">lux · BH1750</div>
             </div>
         </div>
     </div>
-    
+
     <?php require 'includes/footer.php'; ?>
 </body>
