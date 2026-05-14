@@ -6,7 +6,7 @@ require_once 'includes/db.php';
 $lat = $_SESSION['lat'] ?? 45.4642;
 $lng = $_SESSION['lng'] ?? 10.9916;
 
-// Leggo lo storico degli ultimi 7 giorni da MongoDB
+// Per leggere lo storico degli ultimi 7 giorni da MongoDB
 $collection = $db->moon_phases;
 $storico = $collection->find(
     [],
@@ -16,10 +16,11 @@ $storico = $collection->find(
     ]
 );
 
-// Converto lo storico in un formato JSON-friendly per JavaScript
+// Array PHP che poi verrà convertito in JSON
 $storico_json = [];
 foreach ($storico as $doc) {
     $storico_json[] = [
+        // Per convertire la data UTC di MongoDB nel fuso orario italiano
         'data' => $doc['data']->toDateTime()->setTimezone(new DateTimeZone('Europe/Rome'))->format('d/m'),
         'illuminazione' => $doc['illuminazione'],
         'fase' => $doc['fase'],
@@ -30,7 +31,6 @@ foreach ($storico as $doc) {
 
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,12 +39,6 @@ foreach ($storico as $doc) {
     <link rel="stylesheet" href="assets/css/header.css">
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="assets/css/luna.css">
-
-    <script src="assets/js/glossario.js" defer></script>
-    <script src="assets/js/tooltip.js" defer></script>
-
-    <!-- Libreria Astronomy Engine -->
-    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
 </head>
 
 <body>
@@ -57,7 +51,6 @@ foreach ($storico as $doc) {
     </div>
 
     <div class="page-content">
-
         <div class="data-grid">
             <div class="data-item">
                 <div class="data-label">Fase</div>
@@ -83,11 +76,16 @@ foreach ($storico as $doc) {
 
         <div class="section-title">// <span>Storico</span> · ultimi 7 giorni</div>
         <div class="storico-grid" id="storico-grid"></div>
-
     </div>
 
+    <!-- Libreria Astronomy Engine -->
+    <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+    
+    <script src="assets/js/glossario.js"></script>  
+    <script src="assets/js/tooltip.js"></script>
+
     <script>
-        // Ricavo la posizione dell'utente da PHP
+        // Per ricavare la posizione dell'utente da PHP
         const lat = Number(<?= json_encode($lat) ?>);
         const lng = Number(<?= json_encode($lng) ?>);
 
@@ -99,7 +97,7 @@ foreach ($storico as $doc) {
         // perché la libreria non fornisce direttamente il nome della fase
         const moonDeg = Astronomy.MoonPhase(now);
 
-        // Illuminazione reale della luna
+        // Illuminazione reale della luna (da 0 a 1)
         const illum = Astronomy.Illumination(Astronomy.Body.Moon, now).phase_fraction;
 
         // Alba e tramonto lunare con SearchRiseSet
@@ -135,14 +133,20 @@ foreach ($storico as $doc) {
         document.getElementById("moon-illumination").innerText = Math.round(illum * 100) + "%";
         document.getElementById("moonrise").innerText = formatOra(rise);
         document.getElementById("moonset").innerText = formatOra(set);
-        document.getElementById("next-fullmoon").innerText = fullMoon
-            ? fullMoon.date.toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' })
-            : "—";
 
-        // Salva i dati di oggi in MongoDB (solo se non già salvati)
+        if (fullMoon) {
+            document.getElementById("next-fullmoon").innerText =
+                fullMoon.date.toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' });
+        } else {
+            document.getElementById("next-fullmoon").innerText = "—";
+        }
+
+        // Per salvare i dati di oggi in MongoDB (solo se non già salvati)
+        // Fa richiesta al server verso api/save_moon.php
         fetch('api/save_moon.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
+            // Converte oggetto JavaScript in stringa JSON
             body: JSON.stringify({
                 illuminazione: Math.round(illum * 100),
                 fase: getPhaseName(moonDeg),
@@ -151,7 +155,8 @@ foreach ($storico as $doc) {
         });
 
         // Popola lo storico 7 giorni da MongoDB
-        const storico = <?= json_encode($storico_json) ?>;
+        // Converte l'array PHP in una stringa JSON
+        const storico = <?= json_encode($storico_json) ?>;      
         const grid = document.getElementById('storico-grid');
 
         storico.forEach(giorno => {
@@ -160,7 +165,7 @@ foreach ($storico as $doc) {
             item.innerHTML = `
                 <div class="storico-giorno">${giorno.data}</div>
                 <div class="storico-luna">
-                    <div class="storico-luna-fill" style="width:${giorno.illuminazione / 2}px"></div>
+                    <div class="storico-luna-fill" style="width:${giorno.illuminazione}%"></div>
                 </div>
                 <div class="storico-pct">${giorno.illuminazione}%</div>
                 <div class="storico-fase">${giorno.fase}</div>
@@ -168,11 +173,10 @@ foreach ($storico as $doc) {
             grid.appendChild(item);
         });
 
-        // Alla fine dello script, dopo il forEach dei pianeti
+        // Per tutti gli elementi HTML con classe .data-label, applica la funzione 
         document.querySelectorAll('.data-label').forEach(applicaTooltip);
     </script>
 
     <?php require 'includes/footer.php'; ?>
 </body>
-
 </html>

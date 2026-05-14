@@ -5,9 +5,11 @@ session_start();
 $lat = $_SESSION['lat'] ?? 45.4642;
 $lng = $_SESSION['lng'] ?? 10.9916;
 
+// Formatta le coordinate in numeri con 2 cifre decimali
 $lat_display = number_format((float) $lat, 2);
 $lng_display = number_format((float) $lng, 2);
 ?>
+
 <!DOCTYPE html>
 <html lang="it">
 
@@ -22,11 +24,8 @@ $lng_display = number_format((float) $lng, 2);
 </head>
 
 <body>
-
     <?php require 'includes/header.php'; ?>
 
-    <!--<pre><?php print_r($_SESSION); ?></pre>-->
-    <!-- HERO -->
     <div class="hero">
         <div>
             <div class="hero-tag">
@@ -52,7 +51,6 @@ $lng_display = number_format((float) $lng, 2);
     <!-- CARD SENSORI -->
     <div class="cards-wrap">
         <div class="cards">
-
             <div class="card">
                 <div class="card-header">
                     <div class="card-tag">Pressione</div>
@@ -92,13 +90,8 @@ $lng_display = number_format((float) $lng, 2);
                 <div class="card-divider"></div>
                 <div class="card-sub">—</div>
             </div>
-
         </div>
     </div>
-    <script>
-        const lat = Number(<?= json_encode($lat) ?>);
-        const lng = Number(<?= json_encode($lng) ?>);
-    </script>
-
+    
     <?php require 'includes/footer.php'; ?>
 </body>

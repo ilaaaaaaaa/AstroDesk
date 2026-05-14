@@ -5,6 +5,9 @@ $nasa_api_key = $_ENV['NASA_API_KEY'];
 
 $collezione = $db->foto;
 
+$apod = null;
+$errore = null;
+
 echo date('Y-m-d H:i:s');
 $oggi = date('Y-m-d');
 
@@ -15,13 +18,15 @@ if ($dati_db) {
     $apod = $dati_db;
 } else {
     // Chiamata API NASA
-    $url = "https://api.nasa.gov/planetary/apod?api_key=$nasa_api_key&date=$oggi";
+    $url      = "https://api.nasa.gov/planetary/apod?api_key=$nasa_api_key&date=$oggi";
     $risposta = file_get_contents($url);
-    $apod = json_decode($risposta, true);
+    $apod     = json_decode($risposta, true);
 
-    $collezione->insertOne($apod);
+        $collezione->insertOne($apod);
+    }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="it">
 
@@ -49,10 +54,10 @@ if ($dati_db) {
     <div class="page-content">
 
         <?php if (!$apod): ?>
-            <!-- ERRORE: API non raggiungibile e nessun dato in db -->
-            <p class="apod-errore">Impossibile recuperare la foto del giorno. Riprova più tardi.</p>
+        <!-- ERRORE: API non raggiungibile e nessun dato in db -->
+        <p class="apod-errore">Impossibile recuperare la foto del giorno. Riprova più tardi.</p>
 
-        <?php else: ?>
+    <?php else: ?>
 
             <?php if ($apod['media_type'] == 'video'): ?>
                 <?php if (str_ends_with($apod['url'], '.mp4')): ?>
@@ -88,7 +93,7 @@ if ($dati_db) {
                 <p class="apod-text"><?= htmlspecialchars($apod['explanation']) ?></p>
             </div>
 
-        <?php endif; ?>
+    <?php endif; ?>
 
     </div>
 
