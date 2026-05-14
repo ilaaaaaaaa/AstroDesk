@@ -127,48 +127,47 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
 
     <script>
         // Coordinate passate da PHP a JavaScript
-        var lat = <?= $lat ?>;
-        var lng = <?= $lng ?>;
+        const lat = Number(<?= json_encode($lat) ?>);
+        const lng = Number(<?= json_encode($lng) ?>);
 
         // Formatta un oggetto Date come "HH:MM"
         function formatOra(data) {
-            var ore = String(data.getHours()).padStart(2, '0');
-            var minuti = String(data.getMinutes()).padStart(2, '0');
+            let ore = String(data.getHours()).padStart(2, '0');
+            let minuti = String(data.getMinutes()).padStart(2, '0');
             return ore + ':' + minuti;
         }
 
         // Calcolo della durata in ore e minuti tra due oggetti Date
         function formatDurata(alba, tramonto) {
-            var diff = tramonto - alba;          // differenza in millisecondi
-            var minTot = Math.round(diff / 60000); // minuti totali (arrotondati)
-            var ore = Math.floor(minTot / 60);  // ore intere (NON arrotondate)
-            var minuti = minTot % 60;              // minuti rimanenti
-            return ore + 'h ' + String(minuti).padStart(2, '0') + 'm';
+            const diffMs = tramonto - alba;         // Differenza in millisecondi
+            const ore = Math.floor(diffMs / 3600000);
+            const min = Math.floor((diffMs % 3600000) / 60000);
+            return ore + 'h ' + String(min).padStart(2, '0') + 'm';
         }
 
-        var nomiGiorni = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+        let nomiGiorni = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
 
-        var oggi = new Date();
+        let oggi = new Date();
 
         // Storico degli ultimi 8 giorni, escluso oggi (da 8 giorni fa fino a ieri)
-        var contenitore = document.getElementById('storico');
+        let contenitore = document.getElementById('storico');
 
-        for (var i = 8; i >= 1; i--) {
+        for (let i = 8; i >= 1; i--) {
             // Calcolo della data del giorno (oggi - i giorni)
-            var giorno = new Date(oggi);
+            let giorno = new Date(oggi);
             giorno.setDate(oggi.getDate() - i);
 
             // SunCalc calcola alba e tramonto per quella data e coordinate
-            var orari = SunCalc.getTimes(giorno, lat, lng);
-            var alba = orari.sunrise;
-            var tram = orari.sunset;
+            let orari = SunCalc.getTimes(giorno, lat, lng);
+            let alba = orari.sunrise;
+            let tram = orari.sunset;
 
             // Per formattare l'etichetta del giorno (es. "Lun 21/4")
-            var nomeDow = nomiGiorni[giorno.getDay()];      // Restituisce il giorno della settimana come numero (domenica = 0, lunedì = 1, ...)
-            var etichetta = nomeDow + ' ' + giorno.getDate() + '/' + (giorno.getMonth() + 1);
+            let nomeDow = nomiGiorni[giorno.getDay()];      // Restituisce il giorno della settimana come numero (domenica = 0, lunedì = 1, ...)
+            let etichetta = nomeDow + ' ' + giorno.getDate() + '/' + (giorno.getMonth() + 1);
 
             // Creazione del blocco HTML per questo giorno
-            var blocco = document.createElement('div');
+            let blocco = document.createElement('div');
             blocco.className = 'data-item';
 
             blocco.innerHTML =

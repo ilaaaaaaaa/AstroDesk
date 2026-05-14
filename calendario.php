@@ -1,9 +1,11 @@
 <?php
 session_start();
 
+// COORDINATE (di default Milano se non impostate dall'utente)
 $lat = $_SESSION['lat'] ?? 45.4642;
 $lng = $_SESSION['lng'] ?? 10.9916;
 ?>
+
 <!DOCTYPE html>
 <html lang="it">
 
@@ -26,7 +28,6 @@ $lng = $_SESSION['lng'] ?? 10.9916;
     </div>
 
     <div class="page-content">
-
         <!-- EQUINOZI E SOLSTIZI -->
         <div class="section-title">// <span>Equinozi</span> e Solstizi</div>
         <div class="data-grid" id="equinozi"></div>
@@ -34,7 +35,6 @@ $lng = $_SESSION['lng'] ?? 10.9916;
         <!-- ECLISSI -->
         <div class="section-title">// <span>Eclissi</span> · prossimi 12 mesi</div>
         <div class="data-grid" id="eclissi"></div>
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
@@ -91,10 +91,10 @@ $lng = $_SESSION['lng'] ?? 10.9916;
         eventi.forEach(e => {
             const risultato = Astronomy.Seasons(anno);
             let astroTime;
-            if (e.tipo === 0) astroTime = risultato.mar_equinox;
-            if (e.tipo === 1) astroTime = risultato.jun_solstice;
-            if (e.tipo === 2) astroTime = risultato.sep_equinox;
-            if (e.tipo === 3) astroTime = risultato.dec_solstice;
+            if (e.tipo == 0) astroTime = risultato.mar_equinox;
+            if (e.tipo == 1) astroTime = risultato.jun_solstice;
+            if (e.tipo == 2) astroTime = risultato.sep_equinox;
+            if (e.tipo == 3) astroTime = risultato.dec_solstice;
 
             gridEquinozi.appendChild(
                 creaItem(e.label, formatData(astroTime), formatOra(astroTime))
@@ -103,9 +103,9 @@ $lng = $_SESSION['lng'] ?? 10.9916;
 
         // ── ECLISSI ──
         const tipiEclissi = {
-            'total':     'totale',
-            'partial':   'parziale',
-            'annular':   'anulare',
+            'total': 'totale',
+            'partial': 'parziale',
+            'annular': 'anulare',
             'penumbral': 'penombrale'
         };
 
@@ -155,5 +155,4 @@ $lng = $_SESSION['lng'] ?? 10.9916;
 
     <?php require 'includes/footer.php'; ?>
 </body>
-
 </html>

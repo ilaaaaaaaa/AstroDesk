@@ -5,6 +5,7 @@ session_start();
 $lat = $_SESSION['lat'] ?? 45.4642;
 $lng = $_SESSION['lng'] ?? 10.9916;
 ?>
+
 <!DOCTYPE html>
 <html lang="it">
 
@@ -24,7 +25,6 @@ $lng = $_SESSION['lng'] ?? 10.9916;
 </head>
 
 <body>
-
     <?php require 'includes/header.php'; ?>
 
     <!-- HEADER PAGINA -->
@@ -35,7 +35,6 @@ $lng = $_SESSION['lng'] ?? 10.9916;
     </div>
 
     <div class="page-content">
-
         <!-- DATI PRINCIPALI -->
         <div class="data-grid">
             <div class="data-item">
@@ -59,11 +58,12 @@ $lng = $_SESSION['lng'] ?? 10.9916;
                 l'orizzonte</span>
         </div>
         <div class="pianeti-grid" id="pianeti"></div>
-
     </div>
+
     <script>
         const lat = Number(<?= json_encode($lat) ?>);
         const lng = Number(<?= json_encode($lng) ?>);
+        // L'observer è un oggetto che rappresenta la posizione dell'osservatore sulla Terra
         const observer = new Astronomy.Observer(lat, lng, 0);
         const now = Astronomy.MakeTime(new Date());
 
@@ -80,18 +80,9 @@ $lng = $_SESSION['lng'] ?? 10.9916;
 
         // Calcola altitudine attuale di un pianeta
         function getAltitudine(body) {
-            const eq = Astronomy.Equator(body, now, observer, true, true);
-            const hor = Astronomy.Horizon(now, observer, eq.ra, eq.dec, 'normal');
+            const eq = Astronomy.Equator(body, now, observer, true, true);      // Posizione del pianeta nello spazio
+            const hor = Astronomy.Horizon(now, observer, eq.ra, eq.dec, 'normal');      // Posizione del pianeta nel cielo rispetto alla posizione dell'osservatore
             return hor.altitude;
-        }
-
-        // Formatta ora in HH:MM
-        function formatOra(astroTime) {
-            if (!astroTime) return "—";
-            return astroTime.date.toLocaleTimeString('it-IT', {
-                hour: '2-digit',
-                minute: '2-digit'
-            });
         }
 
         // Valuta la visibilità in base all'altitudine
@@ -117,7 +108,7 @@ $lng = $_SESSION['lng'] ?? 10.9916;
             const metaMs = sunSet.date.getTime() + diffMs / 2;
             const meta = new Date(metaMs);
             document.getElementById('momento-migliore').innerText =
-                meta.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
+                meta.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });       // Per convertire oggetto Date in orario HH:mm
         }
 
         // Popola la lista pianeti
@@ -131,16 +122,16 @@ $lng = $_SESSION['lng'] ?? 10.9916;
             item.className = 'storico-item';
 
             item.innerHTML = `
-        <div class="storico-giorno">${p.nome}</div>
-        <div class="planet-dot" style="background: ${visibile ? 'rgba(74, 222, 128, 0.3)' : 'rgba(239, 68, 68, 0.3)'}; border: 1px solid ${visibile ? '#4ade80' : '#ef4444'};"></div>
-        <div class="storico-pct">${alt.toFixed(1)}°</div>
-        <div class="storico-fase">${getVisibilita(alt)}</div>
-    `;
+                <div class="storico-giorno">${p.nome}</div>
+                <div class="planet-dot" style="background: ${visibile ? 'rgba(74, 222, 128, 0.3)' : 'rgba(239, 68, 68, 0.3)'}; border: 1px solid ${visibile ? '#4ade80' : '#ef4444'};"></div>
+                <div class="storico-pct">${alt.toFixed(1)}°</div>
+                <div class="storico-fase">${getVisibilita(alt)}</div>
+            `;
 
             container.appendChild(item);
         });
     </script>
+    
     <?php require 'includes/footer.php'; ?>
 </body>
-
 </html>
