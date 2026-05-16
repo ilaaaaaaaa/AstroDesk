@@ -116,14 +116,14 @@ foreach ($storico as $doc) {
 
         // Converte i gradi in nome della fase
         function getPhaseName(deg) {
-            if (deg < 45) return "Luna nuova";
-            if (deg < 90) return "Crescente";
-            if (deg < 135) return "Primo quarto";
-            if (deg < 180) return "Gibbosa crescente";
-            if (deg < 225) return "Luna piena";
-            if (deg < 270) return "Gibbosa calante";
-            if (deg < 315) return "Ultimo quarto";
-            return "Calante";
+            if (deg < 22.5 || deg >= 337.5) return "Luna nuova";
+            if (deg < 67.5) return "Falce crescente";
+            if (deg < 112.5) return "Primo quarto";
+            if (deg < 157.5) return "Gibbosa crescente";
+            if (deg < 202.5) return "Luna piena";
+            if (deg < 247.5) return "Gibbosa calante";
+            if (deg < 292.5) return "Ultimo quarto";
+            return "Falce calante";
         }
 
         // Formatta un AstroTime in HH:MM italiano

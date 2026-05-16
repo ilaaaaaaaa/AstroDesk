@@ -17,7 +17,9 @@ $collection = $db->moon_phases;
 
 // Controlla se esiste già un record per oggi
 // Per convertire la data nel formato UTC usato da MongoDB
-$oggi = new MongoDB\BSON\UTCDateTime(strtotime('today') * 1000);
+$oggi = new MongoDB\BSON\UTCDateTime(
+    (new DateTime('today', new DateTimeZone('UTC')))->getTimestamp() * 1000
+);
 $esistente = $collection->findOne(['data' => $oggi]);
 
 if (!$esistente) {
