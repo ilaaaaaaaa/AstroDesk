@@ -50,63 +50,65 @@ if ($dati_db) {
 
     <!-- HEADER PAGINA -->
     <div class="page-header">
-        <div class="page-tag">// Foto del giorno</div>
-        <h1 class="page-title">Foto del <em>Giorno</em></h1>
-        <p class="page-sub">Immagine astronomica del giorno dalla NASA.</p>
+        <div>
+            <div class="page-tag">// Foto del giorno</div>
+            <h1 class="page-title">Foto del <em>Giorno</em></h1>
+            <p class="page-sub">Immagine astronomica del giorno dalla NASA.</p>
+        </div>
+        <div class="page-icon">
+            <img src="assets/images/nasa_logo.png" alt="Nasa" width="200" height="200">
+        </div>
     </div>
-
     <div class="page-content">
 
-    <?php if (($errore) || (!$apod)): ?>
-    <!-- ERRORE: API non raggiungibile e nessun dato in db -->
-    <div class="apod-errore">
-        <p><?= htmlspecialchars($errore) ?></p>
-    </div>
-
-    <?php else: ?>
-
-        <?php if ($apod['media_type'] == 'video'): ?>
-            <?php if (str_ends_with($apod['url'], '.mp4')): ?>
-            <!-- VIDEO mp4 diretto — si usa il tag <video> -->
-            <div class="apod-video">
-                <video controls width="100%">
-                    <source src="<?= htmlspecialchars($apod['url']) ?>" type="video/mp4">
-                </video>
+        <?php if (($errore) || (!$apod)): ?>
+            <!-- ERRORE: API non raggiungibile e nessun dato in db -->
+            <div class="apod-errore">
+                <p><?= htmlspecialchars($errore) ?></p>
             </div>
- 
-            <?php else: ?>
-            <!-- VIDEO YouTube o altro — si usa iframe -->
-            <div class="apod-video">
-                <iframe
-                    src="<?= htmlspecialchars($apod['url']) ?>"
-                    title="<?= htmlspecialchars($apod['title']) ?>"
-                    allowfullscreen>
-                </iframe>
-            </div>
-            <?php endif; ?>
 
         <?php else: ?>
-        <!-- IMMAGINE -->
-        <div class="apod-image">
-            <img
-                src="<?= htmlspecialchars($apod['hdurl'] ?? $apod['url']) ?>"
-                alt="<?= htmlspecialchars($apod['title']) ?>">
-        </div>
+
+            <?php if ($apod['media_type'] == 'video'): ?>
+                <?php if (str_ends_with($apod['url'], '.mp4')): ?>
+                    <!-- VIDEO mp4 diretto — si usa il tag <video> -->
+                    <div class="apod-video">
+                        <video controls width="100%">
+                            <source src="<?= htmlspecialchars($apod['url']) ?>" type="video/mp4">
+                        </video>
+                    </div>
+
+                <?php else: ?>
+                    <!-- VIDEO YouTube o altro — si usa iframe -->
+                    <div class="apod-video">
+                        <iframe src="<?= htmlspecialchars($apod['url']) ?>" title="<?= htmlspecialchars($apod['title']) ?>"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                <?php endif; ?>
+
+            <?php else: ?>
+                <!-- IMMAGINE -->
+                <div class="apod-image">
+                    <img src="<?= htmlspecialchars($apod['hdurl'] ?? $apod['url']) ?>"
+                        alt="<?= htmlspecialchars($apod['title']) ?>">
+                </div>
+
+            <?php endif; ?>
+
+            <!-- TITOLO E SPIEGAZIONE -->
+            <div class="apod-body">
+                <div class="apod-date"><?= date('d/m/Y', strtotime($apod['date'])) ?></div>
+                <h2 class="apod-title"><?= htmlspecialchars($apod['title']) ?></h2>
+                <p class="apod-text"><?= htmlspecialchars($apod['explanation']) ?></p>
+            </div>
 
         <?php endif; ?>
-
-        <!-- TITOLO E SPIEGAZIONE -->
-        <div class="apod-body">
-            <div class="apod-date"><?= date('d/m/Y', strtotime($apod['date'])) ?></div>
-            <h2 class="apod-title"><?= htmlspecialchars($apod['title']) ?></h2>
-            <p class="apod-text"><?= htmlspecialchars($apod['explanation']) ?></p>
-        </div>
-
-    <?php endif; ?>
 
     </div>
 
     <?php require 'includes/footer.php'; ?>
 
 </body>
+
 </html>

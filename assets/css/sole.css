@@ -87,3 +87,10 @@ body#page-sole .data-grid {
   overflow: hidden;
   margin-bottom: 2rem;
 }
+
+#page-sole .page-header {
+  padding: 4rem 2.5rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

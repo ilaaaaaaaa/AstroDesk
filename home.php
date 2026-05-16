@@ -52,12 +52,8 @@ $umidita = $latest['umidita'] ?? null;
                 rilevati in tempo reale.
             </p>
         </div>
-        <div class="moon-widget">
-            <div class="moon-fill"></div>
-            <div class="moon-label">
-                <span class="moon-pct">—</span>
-                illuminata
-            </div>
+        <div class="page-icon">
+            <img src="assets/images/bed.png" alt="Stanza" width="175" height="175">
         </div>
     </div>
 

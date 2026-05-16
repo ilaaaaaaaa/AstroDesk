@@ -65,9 +65,14 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
 
     <!-- HEADER PAGINA -->
     <div class="page-header">
-        <div class="page-tag">// Sole</div>
-        <h1 class="page-title">Il <em>Sole</em></h1>
-        <p class="page-sub">Alba, tramonto e dati solari aggiornati.</p>
+        <div>
+            <div class="page-tag">// Sole</div>
+            <h1 class="page-title">Il <em>Sole</em></h1>
+            <p class="page-sub">Alba, tramonto e dati solari aggiornati.</p>
+        </div>
+        <div class="page-icon">
+            <img src="assets/images/sun.png" alt="Sole" width="200" height="200">
+        </div>
     </div>
 
     <div class="page-content">
@@ -182,4 +187,5 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
         document.querySelectorAll('.data-label').forEach(applicaTooltip);
     </script>
 </body>
+
 </html>

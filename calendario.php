@@ -14,6 +14,7 @@ $lng = $_SESSION['lng'] ?? 10.9916;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AstroDesk — Calendario</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/calendario.css">
     <link rel="stylesheet" href="assets/css/header.css">
     <link rel="stylesheet" href="assets/css/footer.css">
 </head>
@@ -22,9 +23,14 @@ $lng = $_SESSION['lng'] ?? 10.9916;
     <?php require 'includes/header.php'; ?>
 
     <div class="page-header">
-        <div class="page-tag">// Calendario</div>
-        <h1 class="page-title">Calendario <em>Astronomico</em></h1>
-        <p class="page-sub">Equinozi, solstizi ed eclissi dell'anno corrente.</p>
+        <div>
+            <div class="page-tag">// Calendario</div>
+            <h1 class="page-title">Calendario <em>Astronomico</em></h1>
+            <p class="page-sub">Equinozi, solstizi ed eclissi dell'anno corrente.</p>
+        </div>
+        <div class="page-icon">
+            <img src="assets/images/calendar.png" alt="Calendario" width="200" height="200">
+        </div>
     </div>
 
     <div class="page-content">
@@ -155,4 +161,5 @@ $lng = $_SESSION['lng'] ?? 10.9916;
 
     <?php require 'includes/footer.php'; ?>
 </body>
+
 </html>

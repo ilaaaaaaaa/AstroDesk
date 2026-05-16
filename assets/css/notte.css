@@ -54,3 +54,10 @@
   letter-spacing: 1px;
   color: var(--text-primary);
 }
+
+.page-header {
+  padding: 4rem 2.5rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

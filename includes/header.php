@@ -13,7 +13,6 @@
         <a href="notte.php">Notte</a>
         <a href="calendario.php">Calendario</a>
         <a href="foto_del_giorno.php">Foto del giorno</a>
-        <a href="about_us.php">About</a>
 
         <div class="nav-right">
             <div class="nav-live">

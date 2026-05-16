@@ -31,6 +31,7 @@ foreach ($storico as $doc) {
 
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,10 +45,16 @@ foreach ($storico as $doc) {
 <body>
     <?php require 'includes/header.php'; ?>
 
-    <div class="page-header">
-        <div class="page-tag">// Luna</div>
-        <h1 class="page-title">La <em>Luna</em></h1>
-        <p class="page-sub">Fase lunare, illuminazione e dati orbitali aggiornati.</p>
+    <div
+        style="display:flex; align-items:center; justify-content:space-between; max-width:var(--max-width); margin:0 auto; padding-right:2.5rem;">
+        <div class="page-header" style="border-bottom:none; max-width:none; margin:0; flex:1;">
+            <div class="page-tag">// Luna</div>
+            <h1 class="page-title">La <em>Luna</em></h1>
+            <p class="page-sub">Fase lunare, illuminazione e dati orbitali aggiornati.</p>
+        </div>
+        <div class="page-icon">
+            <img src="assets/images/moon.png" alt="Luna" width="175" height="175">
+        </div>
     </div>
 
     <div class="page-content">
@@ -80,8 +87,8 @@ foreach ($storico as $doc) {
 
     <!-- Libreria Astronomy Engine -->
     <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
-    
-    <script src="assets/js/glossario.js"></script>  
+
+    <script src="assets/js/glossario.js"></script>
     <script src="assets/js/tooltip.js"></script>
 
     <script>
@@ -156,7 +163,7 @@ foreach ($storico as $doc) {
 
         // Popola lo storico 7 giorni da MongoDB
         // Converte l'array PHP in una stringa JSON
-        const storico = <?= json_encode($storico_json) ?>;      
+        const storico = <?= json_encode($storico_json) ?>;
         const grid = document.getElementById('storico-grid');
 
         storico.forEach(giorno => {
@@ -179,4 +186,5 @@ foreach ($storico as $doc) {
 
     <?php require 'includes/footer.php'; ?>
 </body>
+
 </html>

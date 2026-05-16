@@ -1,0 +1,42 @@
+/* ═══════════════════════════════════
+   CALENDARIO.CSS — AstroDesk
+   Da includere dopo style.css
+   ═══════════════════════════════════ */
+
+/* Equinozi: sempre 4 colonne (sono esattamente 4) */
+#equinozi.data-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Eclissi: 3 colonne → 6 card = 2 righe simmetriche */
+#eclissi.data-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Altezza minima uniforme su tutte le card */
+#equinozi .data-item,
+#eclissi .data-item {
+  min-height: 110px;
+  justify-content: space-between;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #equinozi.data-grid,
+  #eclissi.data-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  #equinozi.data-grid,
+  #eclissi.data-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.page-header {
+  padding: 4rem 2.5rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

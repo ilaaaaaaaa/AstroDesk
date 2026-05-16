@@ -17,8 +17,8 @@ $lng = $_SESSION['lng'] ?? 10.9916;
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="assets/css/header.css">
-    <link rel="stylesheet" href="assets/css/notte.css">
     <link rel="stylesheet" href="assets/css/luna.css">
+    <link rel="stylesheet" href="assets/css/notte.css">
 
     <!-- Libreria Astronomy Engine -->
     <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
@@ -29,9 +29,14 @@ $lng = $_SESSION['lng'] ?? 10.9916;
 
     <!-- HEADER PAGINA -->
     <div class="page-header">
-        <div class="page-tag">// Notte</div>
-        <h1 class="page-title">La <em>Notte</em></h1>
-        <p class="page-sub">Pianeti visibili, ore di buio e condizioni di osservazione.</p>
+        <div>
+            <div class="page-tag">// Notte</div>
+            <h1 class="page-title">La <em>Notte</em></h1>
+            <p class="page-sub">Pianeti visibili, ore di buio e condizioni di osservazione.</p>
+        </div>
+        <div class="page-icon">
+            <img src="assets/images/planet.png" alt="Pianeti" width="200" height="200">
+        </div>
     </div>
 
     <div class="page-content">
@@ -131,7 +136,8 @@ $lng = $_SESSION['lng'] ?? 10.9916;
             container.appendChild(item);
         });
     </script>
-    
+
     <?php require 'includes/footer.php'; ?>
 </body>
+
 </html>

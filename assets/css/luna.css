@@ -76,3 +76,11 @@
 .storico-item.oggi .storico-giorno {
   color: var(--gold);
 }
+
+div.page-header-wrap {
+  border-bottom: 1px solid var(--border);
+}
+
+.page-header {
+  padding: 4rem 2.5rem 3rem;
+}

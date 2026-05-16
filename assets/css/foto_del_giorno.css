@@ -48,26 +48,33 @@
 }
 
 .apod-video {
-    width: 100%;
-    margin-bottom: 2rem;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    overflow: hidden;
-    aspect-ratio: 16 / 9;
+  width: 100%;
+  margin-bottom: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
 }
 
 .apod-video iframe {
-    width: 100%;
-    height: 100%;
-    display: block;
-    border: none;
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: none;
 }
 
 .apod-errore {
-    font-family: "Space Mono", monospace;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    padding: 2rem;
-    border: 1px solid var(--border);
-    border-radius: 4px;
+  font-family: "Space Mono", monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  padding: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.page-header {
+  padding: 4rem 2.5rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
