@@ -579,3 +579,9 @@ body {
   color: var(--text-secondary);
   margin-top: 4px;
 }
+
+
+#grafico-sensori {
+    max-height: 280px;
+    margin-top: 3rem;
+}

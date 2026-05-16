@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     file_put_contents("debug.txt", file_get_contents("php://input"));
     $data = json_decode(file_get_contents('php://input'), true);

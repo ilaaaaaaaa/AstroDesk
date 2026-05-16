@@ -17,7 +17,6 @@ $lng = $_SESSION['lng'] ?? 10.9916;
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="assets/css/header.css">
-    <link rel="stylesheet" href="assets/css/luna.css">
     <link rel="stylesheet" href="assets/css/notte.css">
 
     <!-- Libreria Astronomy Engine -->
