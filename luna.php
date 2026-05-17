@@ -182,6 +182,20 @@ foreach ($storico as $doc) {
 
         // Per tutti gli elementi HTML con classe .data-label, applica la funzione 
         document.querySelectorAll('.data-label').forEach(applicaTooltip);
+
+        // Invia i dati al display TFT (tramite API) per mostrare le info principali
+        fetch('api/push_display.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                ora: new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }),
+                data: new Date().toLocaleDateString('it-IT', { weekday: 'short', day: '2-digit', month: 'short' }),
+                alba: formatOra(rise),
+                tramonto: formatOra(set),
+                luna_fase: getPhaseName(moonDeg),
+                luna_illum: Math.round(illum * 100)
+            })
+        });
     </script>
 
     <?php require 'includes/footer.php'; ?>

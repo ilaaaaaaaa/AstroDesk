@@ -185,6 +185,20 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
 
         // Per tutti gli elementi HTML con classe .data-label, applica la funzione 
         document.querySelectorAll('.data-label').forEach(applicaTooltip);
+
+        // Invia i dati al display TFT (tramite API) per mostrare le info principali
+        fetch('api/push_display.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                ora: new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }),
+                data: new Date().toLocaleDateString('it-IT', { weekday: 'short', day: '2-digit', month: 'short' }),
+                alba: '<?= $alba ?>',
+                tramonto: '<?= $tramonto ?>',
+                luna_fase: '',
+                luna_illum: 0
+            })
+        });
     </script>
 </body>
 
