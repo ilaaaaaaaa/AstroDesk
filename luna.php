@@ -90,6 +90,8 @@ foreach ($storico as $doc) {
 
     <script src="assets/js/glossario.js"></script>
     <script src="assets/js/tooltip.js"></script>
+    <script src="assets/js/astronomia.js"></script>
+    <script src="assets/js/push_display.js"></script>
 
     <script>
         // Per ricavare la posizione dell'utente da PHP
@@ -113,27 +115,6 @@ foreach ($storico as $doc) {
 
         // Prossima luna piena (180°) nei prossimi 40 giorni
         const fullMoon = Astronomy.SearchMoonPhase(180, now, 40);
-
-        // Converte i gradi in nome della fase
-        function getPhaseName(deg) {
-            if (deg < 22.5 || deg >= 337.5) return "Luna nuova";
-            if (deg < 67.5) return "Falce crescente";
-            if (deg < 112.5) return "Primo quarto";
-            if (deg < 157.5) return "Gibbosa crescente";
-            if (deg < 202.5) return "Luna piena";
-            if (deg < 247.5) return "Gibbosa calante";
-            if (deg < 292.5) return "Ultimo quarto";
-            return "Falce calante";
-        }
-
-        // Formatta un AstroTime in HH:MM italiano
-        function formatOra(astroTime) {
-            if (!astroTime) return "—";
-            return astroTime.date.toLocaleTimeString('it-IT', {
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
 
         // Popola i dati principali
         document.getElementById("moon-phase").innerText = getPhaseName(moonDeg);
@@ -183,19 +164,14 @@ foreach ($storico as $doc) {
         // Per tutti gli elementi HTML con classe .data-label, applica la funzione 
         document.querySelectorAll('.data-label').forEach(applicaTooltip);
 
-        // Invia i dati al display TFT (tramite API) per mostrare le info principali
-        fetch('api/push_display.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                ora: new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }),
-                data: new Date().toLocaleDateString('it-IT', { weekday: 'short', day: '2-digit', month: 'short' }),
-                alba: formatOra(rise),
-                tramonto: formatOra(set),
-                luna_fase: getPhaseName(moonDeg),
-                luna_illum: Math.round(illum * 100)
-            })
-        });
+        pushDisplay(
+            new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }),
+            new Date().toLocaleDateString('it-IT', { weekday: 'short', day: '2-digit', month: 'short' }),
+            formatOra(rise),
+            formatOra(set),
+            getPhaseName(moonDeg),
+            Math.round(illum * 100)
+        );
     </script>
 
     <?php require 'includes/footer.php'; ?>

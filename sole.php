@@ -129,6 +129,8 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
 
     <script src="assets/js/glossario.js"></script>
     <script src="assets/js/tooltip.js"></script>
+    <script src="assets/js/astronomia.js"></script>
+    <script src="assets/js/push_display.js"></script>
 
     <script>
         // Coordinate passate da PHP a JavaScript
@@ -136,7 +138,7 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
         const lng = Number(<?= json_encode($lng) ?>);
 
         // Formatta un oggetto Date come "HH:MM"
-        function formatOra(data) {
+        function formatOraDate(data) {
             let ore = String(data.getHours()).padStart(2, '0');
             let minuti = String(data.getMinutes()).padStart(2, '0');
             return ore + ':' + minuti;
@@ -177,7 +179,7 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
 
             blocco.innerHTML =
                 '<div class="data-label">' + etichetta + '</div>' +
-                '<div class="data-value">' + formatOra(alba) + ' — ' + formatOra(tram) + '</div>' +
+                '<div class="data-value">' + formatOraDate(alba) + ' — ' + formatOraDate(tram) + '</div>' +
                 '<div class="data-sub">' + formatDurata(alba, tram) + '</div>';
 
             contenitore.appendChild(blocco);
@@ -186,19 +188,14 @@ $crep_astro_s = convertiOra($r['astronomical_twilight_end']);
         // Per tutti gli elementi HTML con classe .data-label, applica la funzione 
         document.querySelectorAll('.data-label').forEach(applicaTooltip);
 
-        // Invia i dati al display TFT (tramite API) per mostrare le info principali
-        fetch('api/push_display.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                ora: new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }),
-                data: new Date().toLocaleDateString('it-IT', { weekday: 'short', day: '2-digit', month: 'short' }),
-                alba: '<?= $alba ?>',
-                tramonto: '<?= $tramonto ?>',
-                luna_fase: '',
-                luna_illum: 0
-            })
-        });
+        pushDisplay(
+            new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }),
+            new Date().toLocaleDateString('it-IT', { weekday: 'short', day: '2-digit', month: 'short' }),
+            '<?= $alba ?>',
+            '<?= $tramonto ?>',
+            '',
+            0
+        );
     </script>
 </body>
 

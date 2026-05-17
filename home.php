@@ -26,17 +26,17 @@ $umidita = $latest['umidita'] ?? null;
 $cursor = $collection->find(
     [],
     [
-        'sort'  => ['timestamp' => -1],
+        'sort' => ['timestamp' => -1],
         'limit' => 60,
     ]
 );
 // Converte e gira il cursore MongoDB in un array PHP
-$docs = array_reverse(iterator_to_array($cursor));      
- 
+$docs = array_reverse(iterator_to_array($cursor));
+
 $labels_orario = [];    // array per etichette dell'asse x (orario)
 $valoriTemp = [];
 $valoriHum = [];
- 
+
 foreach ($docs as $doc) {
     // Per convertire il timestamp MongoDB in un oggetto DateTime PHP
     $ts = $doc['timestamp']->toDateTime();
@@ -44,7 +44,7 @@ foreach ($docs as $doc) {
     $valoriTemp[] = $doc['temperatura'];
     $valoriHum[] = $doc['umidita'];
 }
- 
+
 $labelsJson = json_encode($labels_orario);
 $temJson = json_encode($valoriTemp);
 $humJson = json_encode($valoriHum);
@@ -128,63 +128,92 @@ $humJson = json_encode($valoriHum);
 
     <!-- GRAFICO SENSORI -->
     <?php if (count($labels_orario) > 0): ?>
-    <div class="cards-wrap">
-        <canvas id="grafico-sensori"></canvas>
-    </div>
-    <script>
-    new Chart(document.getElementById('grafico-sensori'), {
-        type: 'line',
-        data: {
-            labels: <?= $labelsJson ?>,
-            datasets: [     // Un dataset = una linea del grafico
-                {
-                    label: 'Temperatura (°C)',
-                    data: <?= $temJson ?>,
-                    borderColor: '#ff6b6b',
-                    backgroundColor: 'rgba(255,107,107,0.08)',
-                    tension: 0.3,       // Curvatura della linea
-                    pointRadius: 2,     // Raggio dei punti dati
-                    yAxisID: 'yTemp',   // Asse sinistro
-                },
-                {
-                    label: 'Umidità (%)',
-                    data: <?= $humJson ?>,
-                    borderColor: '#4ecdc4',
-                    backgroundColor: 'rgba(78,205,196,0.08)',
-                    tension: 0.3,
-                    pointRadius: 2,
-                    yAxisID: 'yHum',
-                }
-            ]
-        },
-        options: {
-            responsive: true,       // Adatta il grafico alla dimensione della finestra del browser
-            plugins: {
-                legend: { position: 'top' }     // Legenda in alto
-            },
-            scales: {
-                x: {
-                        type: 'time',       // Valori temporali sull'asse X
-                        time: {
-                            unit: 'minute',
-                            displayFormats: { minute: 'HH:mm' }
+        <div class="cards-wrap">
+            <canvas id="grafico-sensori"></canvas>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+        <script src="assets/js/astronomia.js"></script>
+        <script src="assets/js/push_display.js"></script>
+        <script>
+            // --- GRAFICO TEMPERATURA E UMIDITÀ ---
+            new Chart(document.getElementById('grafico-sensori'), {
+                type: 'line',
+                data: {
+                    labels: <?= $labelsJson ?>,
+                    datasets: [     // Un dataset = una linea del grafico
+                        {
+                            label: 'Temperatura (°C)',
+                            data: <?= $temJson ?>,
+                            borderColor: '#ff6b6b',
+                            backgroundColor: 'rgba(255,107,107,0.08)',
+                            tension: 0.3,       // Curvatura della linea
+                            pointRadius: 2,     // Raggio dei punti dati
+                            yAxisID: 'yTemp',   // Asse sinistro
                         },
-                        ticks: { maxTicksLimit: 10 }        // Massimo 10 etichette sull'asse X
-                    },
-                yTemp: {
-                    type: 'linear',
-                    position: 'left',
-                    title: { display: true, text: '°C' }
+                        {
+                            label: 'Umidità (%)',
+                            data: <?= $humJson ?>,
+                            borderColor: '#4ecdc4',
+                            backgroundColor: 'rgba(78,205,196,0.08)',
+                            tension: 0.3,
+                            pointRadius: 2,
+                            yAxisID: 'yHum',
+                        }
+                    ]
                 },
-                yHum: {
-                    type: 'linear',
-                    position: 'right',
-                    title: { display: true, text: '%' },
+                options: {
+                    responsive: true,       // Adatta il grafico alla dimensione della finestra del browser
+                    plugins: {
+                        legend: { position: 'top' }     // Legenda in alto
+                    },
+                    scales: {
+                        x: {
+                            type: 'time',       // Valori temporali sull'asse X
+                            time: {
+                                unit: 'minute',
+                                displayFormats: { minute: 'HH:mm' }
+                            },
+                            ticks: { maxTicksLimit: 10 }        // Massimo 10 etichette sull'asse X
+                        },
+                        yTemp: {
+                            type: 'linear',
+                            position: 'left',
+                            title: { display: true, text: '°C' }
+                        },
+                        yHum: {
+                            type: 'linear',
+                            position: 'right',
+                            title: { display: true, text: '%' },
+                        }
+                    }
                 }
-            }
-        }
-    });
-    </script>
+            });
+
+            // --- CALCOLO ALBA/TRAMONTO/CREPUSCOLI CON SunCalc ---
+            const lat = Number(<?= json_encode($lat) ?>);
+            const lng = Number(<?= json_encode($lng) ?>);
+
+            const observer = new Astronomy.Observer(lat, lng, 0);
+            const now = Astronomy.MakeTime(new Date());
+            const moonDeg = Astronomy.MoonPhase(now);
+            const illum = Astronomy.Illumination(Astronomy.Body.Moon, now).phase_fraction;
+
+            fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=today&formatted=0`)
+                .then(r => r.json())
+                .then(dati => {
+                    function convertiUTC(ora) {
+                        return new Date(ora).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
+                    }
+                    pushDisplay(
+                        new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }),
+                        new Date().toLocaleDateString('it-IT', { weekday: 'short', day: '2-digit', month: 'short' }),
+                        convertiUTC(dati.results.sunrise),
+                        convertiUTC(dati.results.sunset),
+                        getPhaseName(moonDeg),
+                        Math.round(illum * 100)
+                    );
+                });
+        </script>
     <?php endif; ?>
 
     <?php require 'includes/footer.php'; ?>
